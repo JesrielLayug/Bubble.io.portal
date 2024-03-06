@@ -1,4 +1,4 @@
-<main class="h-screen flex items-center">
+<!-- <main class="h-screen flex items-center">
   <div class="mockup-phone border-primary">
     <div class="camera"></div>
     <div class="display">
@@ -9,13 +9,17 @@
       </div>
     </div>
   </div>
+</main> -->
+<main class="h-screen">
+  <section role="main" class="h-full py-6 px-4">
+    <router-outlet></router-outlet>
+  </section>
 </main>
-
 <!-- <div class="drawer h-full">
   <input id="my-drawer" type="checkbox" class="drawer-toggle" />
   <section class="drawer-content min-h-full flex flex-col">
     <app-navbar></app-navbar>
-    <main role="main" class="flex-1">
+    <main role="main" class="flex-1 py-6">
       <router-outlet />
     </main>
   </section>
