@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user';
 import { Response } from '../../models/response';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, HttpClientModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -16,19 +17,18 @@ export class RegisterComponent {
 
   constructor(private authService: AuthService){}
 
-  registerUser(user: User) {
-    this.authService.register(user).subscribe(
-      (Response: Response) => {
-        if(Response.isSuccess){
-          console.log(Response.message);
+  registerUser() {
+    this.authService.register(this.newUser).subscribe({
+      next: (response: Response) => {
+        if(response.isSuccess){
+          console.log(response.message);
         }
         else{
-          console.error(Response.message);
+          console.log(response.message);
         }
-      },
-      (error) => {
-        console.error("Internal server error", error);
       }
+    }
     )
   }
+
 }

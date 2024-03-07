@@ -11,7 +11,7 @@
       >
         Create and account
       </h1>
-      <form class="space-y-4 md:space-y-6" [(ngModel)]="newUser">
+      <form class="space-y-4 md:space-y-6"(ngSubmit)="registerUser()">
         <div>
           <label
             for="email"
@@ -51,6 +51,7 @@
             >Confirm password</label
           >
           <input
+            
             type="confirm-password"
             name="confirm-password"
             id="confirm-password"
