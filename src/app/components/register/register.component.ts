@@ -5,11 +5,18 @@ import { Response } from '../../models/response';
 import { FormsModule, FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { ToastComponent } from '../toast/toast.component';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, HttpClientModule, ReactiveFormsModule, CommonModule],
+  imports: [
+    FormsModule, 
+    HttpClientModule, 
+    ReactiveFormsModule, 
+    CommonModule,
+    ToastComponent
+  ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })

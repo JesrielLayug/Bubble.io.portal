@@ -6,13 +6,21 @@ import { User } from '../../models/user';
 import { Response } from '../../models/response';
 import { FormsModule, FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ToastComponent } from '../toast/toast.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RegisterComponent, HttpClientModule, FormsModule, ReactiveFormsModule,CommonModule],
+  imports: [
+    RegisterComponent, 
+    HttpClientModule, 
+    FormsModule, 
+    ReactiveFormsModule,
+    CommonModule, 
+    ToastComponent
+],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
@@ -38,7 +46,7 @@ export class LoginComponent implements OnInit {
             console.log(response.message);
           }
           else{
-            console.log(response.message);
+            console.log(response.message)
           }
         }
       })
