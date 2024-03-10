@@ -5,7 +5,7 @@ import { Response } from '../../models/response';
 import { FormsModule, FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { ToastComponent } from '../toast/toast.component';
+import { InfoToastComponent } from '../toasts/info-toast/info-toast.component';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +15,7 @@ import { ToastComponent } from '../toast/toast.component';
     HttpClientModule, 
     ReactiveFormsModule, 
     CommonModule,
-    ToastComponent
+    InfoToastComponent
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
@@ -23,6 +23,8 @@ import { ToastComponent } from '../toast/toast.component';
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   newUser: User = new User();
+
+  isVisible: boolean = false;
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder){}
   
@@ -49,6 +51,7 @@ export class RegisterComponent implements OnInit {
         next: (response: Response) => {
           if(response.isSuccess){
             console.log(response.message);
+            this.isVisible = false;
           }
           else{
             console.log(response.message);

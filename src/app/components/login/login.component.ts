@@ -6,7 +6,9 @@ import { User } from '../../models/user';
 import { Response } from '../../models/response';
 import { FormsModule, FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ToastComponent } from '../toast/toast.component';
+import { InfoToastComponent } from '../toasts/info-toast/info-toast.component';
+import { ToastService } from '../../services/toast.service';
+import { WarnToastComponent } from '../toasts/warn-toast/warn-toast.component';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +19,8 @@ import { ToastComponent } from '../toast/toast.component';
     FormsModule, 
     ReactiveFormsModule,
     CommonModule, 
-    ToastComponent
+    InfoToastComponent,
+    WarnToastComponent
 ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
@@ -26,7 +29,14 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   user: User = new User();
 
-  constructor(private AuthService: AuthService, private FormBuilder: FormBuilder){}
+  toastMessage: string ='';
+  isSuccess = false;
+  
+  constructor(
+    private AuthService: AuthService, 
+    private FormBuilder: FormBuilder,
+    private toastService : ToastService
+    ){}
 
   ngOnInit(): void {
       this.loginForm = this.FormBuilder.group({
@@ -35,21 +45,30 @@ export class LoginComponent implements OnInit {
       })
   }
 
-  loginUser(){
+  async loginUser(){
     if(this.loginForm.valid){
       this.user.email = this.loginForm.get('email')?.value;
       this.user.password = this.loginForm.get('password')?.value;
-      this.AuthService.login(this.user.email, this.user.password)
-      .subscribe({
-        next: (response: Response) => {
-          if(response.isSuccess){
-            console.log(response.message);
-          }
-          else{
-            console.log(response.message)
-          }
+
+      try{
+        const response = await this.AuthService.login(this.user.email, this.user.password);
+
+        this.isSuccess = response.isSuccess;
+        this.toastMessage = response.message;
+
+        if(response.isSuccess){
+          console.log(response.message);
+          await this.toastService.showToast(this.toastMessage);
         }
-      })
+        else{
+          console.log(response.message);
+          await this.toastService.showToast(this.toastMessage);
+        }
+      }
+      catch(error) {
+        console.log(error);
+      }
     }
   }
+
 }
