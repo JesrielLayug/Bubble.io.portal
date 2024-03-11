@@ -48,32 +48,6 @@ export class AuthService {
     }
   }
 
-  // login(email: string, password: string): Observable<{ isSuccess: boolean; message: string }> {
-
-  //   const user: User = {
-  //     email: email,
-  //     password: password
-  //   };
-    
-  //   return this.Httpclient.post<HttpResponse<Claim>>(`${environment.apiUrl}login`, user, { observe: 'response' })
-  //   .pipe(
-  //     switchMap(response => {
-  //       if (response.status === 200) {
-  //         return of({ isSuccess: true, message: 'Login successful' });
-  //       } else {
-  //         return of({ isSuccess: false, message: 'Incorrect email or password' });
-  //       }
-  //     }),
-  //     catchError(error => {
-  //       if (error === 'Unauthorized') {
-  //         return of({ isSuccess: false, message: 'Unauthorized - Incorrect email or password' });
-  //       } else {
-  //         console.error('An unexpected error occurred:', error.message);
-  //         return throwError(error);
-  //       }
-  //     })
-  //   );
-  // }
 
   register(user: User): Observable<Response> {
     return this.Httpclient.post(`${environment.apiUrl}register`, user, { observe: 'response' }).pipe(
