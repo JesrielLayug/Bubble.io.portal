@@ -9,6 +9,8 @@ import { CommonModule } from '@angular/common';
 import { InfoToastComponent } from '../toasts/info-toast/info-toast.component';
 import { ToastService } from '../../services/toast.service';
 import { WarnToastComponent } from '../toasts/warn-toast/warn-toast.component';
+import { StorageService } from '../../services/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -31,14 +33,23 @@ export class LoginComponent implements OnInit {
 
   toastMessage: string ='';
   isSuccess = false;
+
+  isLoggedIn = false;
   
   constructor(
     private AuthService: AuthService, 
     private FormBuilder: FormBuilder,
-    private toastService : ToastService
+    private toastService : ToastService,
+    private StorageService: StorageService,
+    private Router: Router
     ){}
 
   ngOnInit(): void {
+
+    if(this.StorageService.isLoggedIn()){
+      this.isLoggedIn = true;
+    }
+
       this.loginForm = this.FormBuilder.group({
         email: ['', [Validators.required]],
         password: ['', [Validators.required]]
@@ -58,6 +69,7 @@ export class LoginComponent implements OnInit {
 
         if(response.isSuccess){
           console.log(response.message);
+          this.Router.navigate(['/']);
           await this.toastService.showToast(this.toastMessage);
         }
         else{
@@ -71,4 +83,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  reloadPage(): void {
+    window.location.reload();
+  }
 }

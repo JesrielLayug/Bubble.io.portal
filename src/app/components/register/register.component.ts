@@ -52,6 +52,7 @@ export class RegisterComponent implements OnInit {
           if(response.isSuccess){
             console.log(response.message);
             this.isVisible = false;
+            this.reloadPage();
           }
           else{
             console.log(response.message);
@@ -59,6 +60,10 @@ export class RegisterComponent implements OnInit {
         }
       })
     }
+  }
+
+  reloadPage(): void {
+    window.location.reload();
   }
 
 }
