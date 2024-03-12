@@ -11,20 +11,21 @@
   </div>
 </main> -->
 
-<main *ngIf="isLoggedIn" class="h-screen">
+<!-- <main class="h-screen">
   <div class="drawer h-full">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <section class="drawer-content min-h-full flex flex-col">
       <app-navbar class="shadow-lg"></app-navbar>
       <main role="main" class="flex-1">
-        <router-outlet />
+        <router-outlet></router-outlet>
       </main>
     </section>
     <app-drawer class="drawer-side"></app-drawer>
   </div>
-</main>
+</main> -->
 
-<main role="main" class="h-screen overflow-hidden">
+
+<main class="h-screen overflow-hidden">
   <router-outlet></router-outlet>
 </main>
 <!-- <div class="drawer h-full">

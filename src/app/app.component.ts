@@ -2,14 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { DrawerComponent } from './components/drawer/drawer.component';
-import { StorageService } from './services/storage.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from './services/auth.service';
+import { HomeComponent } from './components/home/home.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, DrawerComponent, CommonModule],
+  imports: [RouterOutlet, NavbarComponent, DrawerComponent, CommonModule, HomeComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
@@ -18,15 +19,16 @@ export class AppComponent implements OnInit {
 
   isLoggedIn = false;
 
-  constructor(private StorageService: StorageService, private Router: Router) {}
+  constructor(private Router: Router, private AuthService: AuthService) {}
 
   ngOnInit(): void {
-    this.isLoggedIn = this.StorageService.isLoggedIn();
+    this.isLoggedIn = this.AuthService.checkAuthentication();
 
       if(this.isLoggedIn){
         this.Router.navigate(['/']);
       }
-
-      this.Router.navigate(['login'])
+      else{
+        this.Router.navigate(['login'])
+      }
   }
 }

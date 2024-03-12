@@ -27,14 +27,19 @@ export class AuthService {
     }
 
     try{
-      const response = await this.Httpclient.post<HttpResponse<Claim>>(
+      const response: any = await this.Httpclient.post<any>(
         `${environment.apiUrl}login`,
         user,
-        {observe: 'response'}
+        { observe: 'response' }
       ).toPromise();
 
       if(response?.status == 200){
-        return {isSuccess: true, message: "Login successful"};
+        const accessToken = response.body?.accessToken;
+
+            if (accessToken) {
+                this.setToken(accessToken);
+                return { isSuccess: true, message: "Login successful" };
+            }
       }
         return {isSuccess: false, message: "Account does not exist"};
     }
@@ -89,12 +94,14 @@ export class AuthService {
     this.isAthenticationSubject.next(false);
   }
 
-  private checkAuthentication(){
+  checkAuthentication() : boolean{
     const storedToken = localStorage.getItem('token');
     if(storedToken){
       this.token = storedToken;
       this.isAthenticationSubject.next(true);
+      return true;
     }
+    return false;
   }
 
   setToken(token: string){
