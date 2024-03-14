@@ -5,17 +5,26 @@ import { Response } from '../../models/response';
 import { FormsModule, FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { InfoToastComponent } from '../toasts/info-toast/info-toast.component';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, HttpClientModule, ReactiveFormsModule, CommonModule],
+  imports: [
+    FormsModule, 
+    HttpClientModule, 
+    ReactiveFormsModule, 
+    CommonModule,
+    InfoToastComponent
+  ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   newUser: User = new User();
+
+  isVisible: boolean = false;
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder){}
   
@@ -42,6 +51,8 @@ export class RegisterComponent implements OnInit {
         next: (response: Response) => {
           if(response.isSuccess){
             console.log(response.message);
+            this.isVisible = false;
+            this.reloadPage();
           }
           else{
             console.log(response.message);
@@ -49,6 +60,10 @@ export class RegisterComponent implements OnInit {
         }
       })
     }
+  }
+
+  reloadPage(): void {
+    window.location.reload();
   }
 
 }

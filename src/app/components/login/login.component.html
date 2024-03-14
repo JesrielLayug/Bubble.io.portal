@@ -1,5 +1,5 @@
 <div
-  class="w-full h-full flex flex-col items-center justify-center mt-6 md:h-full lg:py-0"
+  class="w-full h-screen flex flex-col items-center justify-center mt-6 md:h-full lg:py-0"
 >
   <a
     href="#"
@@ -78,6 +78,7 @@
           >
         </div>
         <button
+          p-ripple
           type="submit"
           class="w-full p-2.5 rounded-lg text-xs bg-purple-700 text-white border-purple-700"
         >
@@ -95,6 +96,9 @@
     </div>
   </div>
 </div>
+
+<app-info-toast *ngIf="isSuccess" [message]="toastMessage"></app-info-toast>
+<app-warn-toast *ngIf="!isSuccess" [message]="toastMessage"></app-warn-toast>
 
 <dialog id="register_modal" class="modal modal-bottom sm:modal-middle">
   <div class="modal-box">

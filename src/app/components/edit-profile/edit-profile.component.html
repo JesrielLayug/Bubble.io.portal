@@ -1,6 +1,4 @@
-
 <div
-  *ngIf="!isVisible"
   class="card flex flex-col items-center w-full justify-center py-8 mx-auto lg:py-0"
 >
   <div
@@ -10,9 +8,25 @@
       <h1
         class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
       >
-        Create and account
+        Edit Profile
       </h1>
-      <form [formGroup]="registerForm" (ngSubmit)="registerUser()" class="space-y-4 md:space-y-6">
+      <form class="space-y-4 md:space-y-6">
+        <div>
+            <label
+              for="email"
+              class="block mb-2 text-xs font-medium text-gray-900 dark:text-white"
+              >Fullname</label
+            >
+            <input
+              formControlName="Fullname"
+              type="text"
+              name="Fullname"
+              id="Fullname"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Fullname"
+              required=""
+            />
+          </div>
         <div>
           <label
             for="email"
@@ -49,20 +63,9 @@
           <label
             for="confirm-password"
             class="block mb-2 text-xs font-medium text-gray-900 dark:text-white"
-            >Confirm password</label
+            >Bio</label
           >
-          <input
-            formControlName="confirmPassword"
-            type="password"
-            name="confirm-password"
-            id="confirm-password"
-            placeholder="••••••••"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            required=""
-          />
-          <div *ngIf="registerForm.hasError('mismatch') && !registerForm.get('confirmPassword')?.hasError('required')">
-            <p class="error-text text-xs mt-2 text-red-600">Passwords do not match.</p>
-          </div>
+          <textarea placeholder="Bio" class="textarea w-full bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" ></textarea>
         </div>
         <!-- <div class="flex items-start">
           <div class="flex items-center h-5">
@@ -91,7 +94,7 @@
           type="submit"
           class="text-center w-full p-2.5 rounded-lg text-xs bg-purple-700 text-white border-purple-700"
         >
-          Create an account
+          Save
         </button>
       </form>
     </div>

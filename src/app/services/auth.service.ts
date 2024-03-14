@@ -3,8 +3,8 @@ import { User } from '../models/user';
 import { HttpClient, HttpResponse, HttpStatusCode, HttpClientModule, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Response } from '../models/response';
 import { environment } from '../../environments/environment';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { Claim } from '../models/claim';
 
 @Injectable({
@@ -20,33 +20,39 @@ export class AuthService {
     this.checkAuthentication();
   }
 
-  login(email: string, password: string): Observable<{ isSuccess: boolean; message: string }> {
+  async login(email: string, password: string): Promise<{ isSuccess: boolean; message: string }>{
     const user: User = {
       email: email,
       password: password
-    };
-    return this.Httpclient.post<HttpResponse<Claim>>(`${environment.apiUrl}login`, user, { observe: 'response' })
-      .pipe(
-        map((response: HttpResponse<any>) => {
-          if (response.status === 200) {
-            this.setToken(response.body.accessToken); // Use response.body to access the body of the response
-            return {
-              isSuccess: true,
-              message: "Login Success!"
-            };
-          } else {
-            return {
-              isSuccess: false,
-              message: "Error login processed"
-            };
-          }
-        }),
-        catchError((error) => {
-          console.log(error);
-          return throwError(error);
-        })
-      );
+    }
+
+    try{
+      const response: any = await this.Httpclient.post<any>(
+        `${environment.apiUrl}login`,
+        user,
+        { observe: 'response' }
+      ).toPromise();
+
+      if(response?.status == 200){
+        const accessToken = response.body?.accessToken;
+
+            if (accessToken) {
+                this.setToken(accessToken);
+                return { isSuccess: true, message: "Login successful" };
+            }
+      }
+        return {isSuccess: false, message: "Account does not exist"};
+    }
+    catch(error: any) {
+      if (error.status === 401) {
+        return { isSuccess: false, message: 'Incorrect email or password' };
+      } else {
+        console.error('An unexpected error occurred:', error.message);
+        throw error;
+      }
+    }
   }
+
 
   register(user: User): Observable<Response> {
     return this.Httpclient.post(`${environment.apiUrl}register`, user, { observe: 'response' }).pipe(
@@ -88,12 +94,14 @@ export class AuthService {
     this.isAthenticationSubject.next(false);
   }
 
-  private checkAuthentication(){
+  checkAuthentication() : boolean{
     const storedToken = localStorage.getItem('token');
     if(storedToken){
       this.token = storedToken;
       this.isAthenticationSubject.next(true);
+      return true;
     }
+    return false;
   }
 
   setToken(token: string){
