@@ -1,0 +1,17 @@
+<div *ngIf="!imagePreview" id="image-preview" class="max-w-sm p-6 bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-primary-600 focus:border-primary-600 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 items-center mx-auto text-center cursor-pointer">
+    <!-- Move the input element outside the label -->
+    <input id="upload" type="file" class="hidden" accept="image/*" (change)="onFileChange($event)" />
+    <label for="upload" class="cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-white mx-auto">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+      </svg>
+      <h5 class="my-2 text-xl font-bold tracking-tight text-white">Upload picture</h5>
+      <p class="font-normal text-sm text-gray-300 md:px-6">Choose photo and should be in <b class="text-white">JPG, PNG, or GIF</b> format.</p>
+      <span class="text-gray-500 bg-gray-200 z-50">{{ filename }}</span>
+    </label>
+  </div>
+  <div class="flex items-center justify-center">
+    <div class="w-full" *ngIf="imagePreview">
+      <img [src]="imagePreview" class="max-h-48 rounded-lg mx-auto" alt="Image preview" />
+    </div>
+  </div>

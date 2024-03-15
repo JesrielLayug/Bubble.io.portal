@@ -11,11 +11,12 @@
         Edit Profile
       </h1>
       <form class="space-y-4 md:space-y-6">
+        <app-upload-image></app-upload-image>
         <div>
             <label
               for="email"
               class="block mb-2 text-xs font-medium text-gray-900 dark:text-white"
-              >Fullname</label
+              >Firstname</label
             >
             <input
               formControlName="Fullname"
@@ -31,19 +32,39 @@
           <label
             for="email"
             class="block mb-2 text-xs font-medium text-gray-900 dark:text-white"
-            >Email</label
+            >Lastname</label
           >
           <input
-            formControlName="email"
-            type="email"
-            name="email"
-            id="email"
+            formControlName="Fullname"
+            type="text"
+            name="Fullname"
+            id="Fullname"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="example@email.com"
+            placeholder="Fullname"
             required=""
           />
         </div>
         <div>
+          <label
+            for="confirm-password"
+            class="block mb-2 text-xs font-medium text-gray-900 dark:text-white"
+            >Bio</label
+          >
+          <textarea placeholder="Bio" class="textarea w-full bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" ></textarea>
+        </div>
+        <button
+          type="submit"
+          class="text-center w-full p-2.5 rounded-lg text-xs bg-purple-700 text-white border-purple-700"
+        >
+          Save
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+        <!-- <div>
           <label
             for="password"
             class="block mb-2 text-xs font-medium text-gray-900 dark:text-white"
@@ -58,45 +79,4 @@
             class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required=""
           />
-        </div>
-        <div>
-          <label
-            for="confirm-password"
-            class="block mb-2 text-xs font-medium text-gray-900 dark:text-white"
-            >Bio</label
-          >
-          <textarea placeholder="Bio" class="textarea w-full bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" ></textarea>
-        </div>
-        <!-- <div class="flex items-start">
-          <div class="flex items-center h-5">
-            <input
-              id="terms"
-              aria-describedby="terms"
-              type="checkbox"
-              class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-              required=""
-            />
-          </div>
-          <div class="ml-3 pt-1 text-xs">
-            <label
-              for="terms"
-              class="font-light text-gray-500 dark:text-gray-300"
-              >I accept the
-              <a
-                class="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                href="#"
-                >Terms and Conditions</a
-              ></label
-            >
-          </div>
         </div> -->
-        <button
-          type="submit"
-          class="text-center w-full p-2.5 rounded-lg text-xs bg-purple-700 text-white border-purple-700"
-        >
-          Save
-        </button>
-      </form>
-    </div>
-  </div>
-</div>
