@@ -28,7 +28,7 @@ export class AuthService {
 
     try{
       const response: any = await this.Httpclient.post<any>(
-        `${environment.apiUrl}login`,
+        `${environment.apiUrl}/login`,
         user,
         { observe: 'response' }
       ).toPromise();
@@ -55,7 +55,7 @@ export class AuthService {
 
 
   register(user: User): Observable<Response> {
-    return this.Httpclient.post(`${environment.apiUrl}register`, user, { observe: 'response' }).pipe(
+    return this.Httpclient.post(`${environment.apiUrl}/register`, user, { observe: 'response' }).pipe(
       map((response: HttpResponse<any>) => {
         if (response.status === 200) {
           return {
