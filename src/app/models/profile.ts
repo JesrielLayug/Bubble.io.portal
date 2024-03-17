@@ -4,7 +4,8 @@ export class Profile {
     lastname: string | null = null;
     bio: string | null = null;
     imageData: FormData | null = null;
-    imageUrl: string | null = null;
+    imageUrl: string | null = null
+    email: string | null = null;
 
     constructor(){
         this.imageData = null;
