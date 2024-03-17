@@ -30,6 +30,8 @@ export class ProfileService {
           profile.lastname = info.lastname;
           profile.bio = info.bio;
           profile.email = info.email;
+          profile.imageData = image.imageData;
+          profile.imageUrl = image.imageUrl
           return profile;
         })
       );
