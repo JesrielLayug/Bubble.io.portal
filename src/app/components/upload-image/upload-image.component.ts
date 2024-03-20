@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,6 +9,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './upload-image.component.css'
 })
 export class UploadImageComponent {
+  @Output()
+  imageUploaded: EventEmitter<{imageUrl: string, imageData: FormData}> = new EventEmitter();
+
+
   filename: string | null = null;
   imagePreview: string | null = null;
   isEventListenerAdded: boolean = false;
@@ -20,6 +24,9 @@ export class UploadImageComponent {
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview = reader.result as string;
+        const formData = new FormData();
+        formData.append('file', file);
+        this.imageUploaded.emit({imageUrl: this.imagePreview, imageData: formData});
         if (!this.isEventListenerAdded) {
           this.isEventListenerAdded = true;
         }

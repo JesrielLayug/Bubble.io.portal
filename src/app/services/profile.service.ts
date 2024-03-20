@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpStatusCode } from '@angular/common/http';
 import { Profile } from '../models/profile';
 import { environment } from '../../environments/environment';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, forkJoin, throwError } from 'rxjs';
+import { Response } from '../models/response';
 
 @Injectable({
   providedIn: 'root'
@@ -30,8 +31,6 @@ export class ProfileService {
           profile.lastname = info.lastname;
           profile.bio = info.bio;
           profile.email = info.email;
-          profile.imageData = image.imageData;
-          profile.imageUrl = image.imageUrl
           return profile;
         })
       );
@@ -42,5 +41,31 @@ export class ProfileService {
     };
   }
 
+  async add(profile: Profile): Promise<Response>{
+    try{
+      const http = await this.HttpClient.post<Profile>(
+        `${environment.apiUrl}/Profile/Add`, 
+        profile, 
+        { observe: 'response' }
+      ).toPromise();
+
+      const response = new Response();
+
+      if(http && http.status === 200){
+        response.isSuccess = true;
+        response.message = 'Successfully updated your profile.'
+      }
+      else{
+        response.isSuccess = false;
+        response.message = 'Failed to update your profile.'
+      }
+  
+      return response;
+    }
+    catch(error: any){
+      console.error(error);
+      throw error;
+    }
+  }
 
 }

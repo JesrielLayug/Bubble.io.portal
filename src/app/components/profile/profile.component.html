@@ -1,6 +1,8 @@
 <app-loader *ngIf="!profile"></app-loader>
 
-<main *ngIf="profile | async as profile" class="w-full h-full flex flex-col md:h-full md:mt-0 lg:py-0 items-center justify-center">
+<!-- *ngIf="profile | async as profile" -->
+
+<main  class="w-full h-full flex flex-col md:h-full md:mt-0 lg:py-0 items-center justify-center">
     <section class="w-sm flex flex-col items-center justify-center">
         <div class="avatar online mb-4">
             <div class="w-28 h-28 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
@@ -9,7 +11,7 @@
           </div>
           <!-- <h6 class="mb-5 text-lg font-semibold">Personal Information</h6> -->
     </section>
-    <div class="mt-3.5 mb-10 flex flex-col items-center w-3/4">
+    <!-- <div class="mt-3.5 mb-10 flex flex-col items-center w-3/4">
       <h6 class="text-lg font-semibold text-slate-300">{{profile.firstname}} {{profile.lastname}}</h6>
       <p class="mt-2 text-xs w-full flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 me-2">
@@ -21,7 +23,7 @@
       <p class="mt-10 text-xs w-3/4 md:max-w-md text-center flex items-center justify-center">
         {{profile.bio}}
       </p>
-    </div>
+    </div> -->
 
     <div class="w-full md:mt-0 sm:max-w-md xl:p-0 mt-5">
       <div class="stats sm:stats-horizontal shadow flex ">

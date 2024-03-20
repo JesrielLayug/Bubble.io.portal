@@ -10,8 +10,8 @@
       >
         Edit Profile
       </h1>
-      <form class="space-y-4 md:space-y-6">
-        <app-upload-image></app-upload-image>
+      <form [formGroup]="profileForm" (ngSubmit)="add()" class="space-y-4 md:space-y-6">
+        <app-upload-image (imageUploaded)="handleImageUpload"></app-upload-image>
         <div>
             <label
               for="email"
@@ -19,12 +19,12 @@
               >Firstname</label
             >
             <input
-              formControlName="Fullname"
+              formControlName="firstname"
               type="text"
-              name="Fullname"
-              id="Fullname"
+              name="firstname"
+              id="firstname"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Fullname"
+              placeholder="Firstname"
               required=""
             />
           </div>
@@ -35,12 +35,12 @@
             >Lastname</label
           >
           <input
-            formControlName="Fullname"
+            formControlName="lastname"
             type="text"
-            name="Fullname"
-            id="Fullname"
+            name="lastname"
+            id="lastname"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Fullname"
+            placeholder="Lastname"
             required=""
           />
         </div>
@@ -50,7 +50,7 @@
             class="block mb-2 text-xs font-medium text-gray-900 dark:text-white"
             >Bio</label
           >
-          <textarea placeholder="Bio" class="textarea w-full bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" ></textarea>
+          <textarea formControlName="bio" placeholder="Bio" class="textarea w-full bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" ></textarea>
         </div>
         <button
           type="submit"
@@ -63,7 +63,8 @@
   </div>
 </div>
 
-
+<app-info-toast *ngIf="isSuccess" [message]="toastMessage"></app-info-toast>
+<app-warn-toast *ngIf="!isSuccess" [message]="toastMessage"></app-warn-toast>
         <!-- <div>
           <label
             for="password"
