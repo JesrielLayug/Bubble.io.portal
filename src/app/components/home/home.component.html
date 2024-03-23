@@ -1,9 +1,9 @@
 <div class="h-full flex gap-1">
-    <div class="drawer h-full">
+    <div class="drawer h-lvh">
       <input id="my-drawer" type="checkbox" class="drawer-toggle" />
       <section class="drawer-content min-h-full flex flex-col">
-        <app-navbar class="shadow-lg"></app-navbar>
-        <main role="main" class="flex-1 overflow-auto">
+        <app-navbar class="shadow-lg fixed-top "></app-navbar>
+        <main role="main" class="flex-1 overflow-auto min-h-dvh p-2">
           <router-outlet></router-outlet>
         </main>
       </section>

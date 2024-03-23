@@ -63,11 +63,11 @@ export class LoginComponent implements OnInit {
         if(response.isSuccess){
           console.log(response.message);
           this.Router.navigate(['/']);
-          await this.toastService.showToast(this.toastMessage);
+          await this.toastService.showInfoToast(this.toastMessage);
         }
         else{
           console.log(response.message);
-          await this.toastService.showToast(this.toastMessage);
+          await this.toastService.showWarnToast(this.toastMessage);
         }
       }
       catch(error) {
