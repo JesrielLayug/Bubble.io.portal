@@ -5,6 +5,8 @@ import { Profile } from '../../models/profile';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from '../loader/loader.component';
+import { Router } from '@angular/router';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,9 +19,19 @@ export class ProfileComponent implements OnInit{
 
   profile: Observable<Profile> | null = null;
 
-  constructor(private ProfileService: ProfileService){}
+  constructor(private ProfileService: ProfileService, private router: Router, private ToastService: ToastService){}
 
   async ngOnInit(): Promise<void> {
       this.profile = await this.ProfileService.get();
   }
+
+  handleEditProfile(): void {
+    // Reload the page
+    // window.location.reload();
+
+    setTimeout(() => {
+      // Show toast after the delay
+      this.ToastService.showInfoToast("Successfully updated your profile.");
+    }, 1000);
+}
 }

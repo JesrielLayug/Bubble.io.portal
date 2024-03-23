@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse, HttpStatusCode } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse, HttpStatusCode } from '@angular/common/http';
 import { Profile } from '../models/profile';
 import { environment } from '../../environments/environment';
 import { catchError, map } from 'rxjs/operators';
@@ -41,31 +41,45 @@ export class ProfileService {
     };
   }
 
-  async add(profile: Profile): Promise<Response>{
-    try{
-      const http = await this.HttpClient.post<Profile>(
-        `${environment.apiUrl}/Profile/Add`, 
-        profile, 
-        { observe: 'response' }
-      ).toPromise();
+  async add(profile: Profile, imageData: string | null, imageName: string | null): Promise<Response> {
+    try {
+        const requestData = {
+          firstname: profile.firstname,
+          lastname: profile.firstname,
+          bio: profile.bio,
+          imageData: imageData,
+          imageUrl: imageName
+        };
+    
+      
+        const httpResponse = await this.HttpClient.post<any>(
+            `${environment.apiUrl}/Profile/Add`,
+            requestData,
+            {observe: 'response'}
+        ).toPromise();
 
-      const response = new Response();
-
-      if(http && http.status === 200){
-        response.isSuccess = true;
-        response.message = 'Successfully updated your profile.'
-      }
-      else{
-        response.isSuccess = false;
-        response.message = 'Failed to update your profile.'
-      }
+        if (httpResponse !== null && httpResponse !== undefined) {
+          const response: Response = {
+            isSuccess: httpResponse.ok,
+            message: httpResponse.ok ? 'Successfully updated your profile.' : 'Failed to update your profile.'
+          };
   
-      return response;
+          return response;
+        } else {
+          throw new Error('HTTP response is undefined');
+        }
+    } catch (error: any) {
+      if (error instanceof HttpErrorResponse && error.status === 200) {
+        const response: Response = {
+          isSuccess: true,
+          message: 'Successfully updated your profile.'
+        };
+        return response;
+      } else {
+        console.error('Error occurred:', error);
+        throw error;
+      }
     }
-    catch(error: any){
-      console.error(error);
-      throw error;
-    }
-  }
+}
 
 }

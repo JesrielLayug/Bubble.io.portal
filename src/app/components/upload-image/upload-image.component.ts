@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ImageService } from '../../services/image.service';
 
 @Component({
   selector: 'app-upload-image',
@@ -9,9 +10,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './upload-image.component.css'
 })
 export class UploadImageComponent {
-  @Output()
-  imageUploaded: EventEmitter<{imageUrl: string, imageData: FormData}> = new EventEmitter();
-
+  constructor(private imageService: ImageService){}
 
   filename: string | null = null;
   imagePreview: string | null = null;
@@ -24,19 +23,23 @@ export class UploadImageComponent {
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview = reader.result as string;
-        const formData = new FormData();
-        formData.append('file', file);
-        this.imageUploaded.emit({imageUrl: this.imagePreview, imageData: formData});
-        if (!this.isEventListenerAdded) {
-          this.isEventListenerAdded = true;
+        
+        const base64ImageData = reader.result?.toString().split(',')[1];
+  
+        if (base64ImageData !== undefined) { 
+          const jsonData = {
+            imageData: base64ImageData,
+            filename: this.filename
+          };
+  
+          this.imageService.setImageData(jsonData);
         }
       };
       reader.readAsDataURL(file);
     } else {
       this.filename = null;
       this.imagePreview = null;
-      this.isEventListenerAdded = false;
     }
   }
-
 }
+
