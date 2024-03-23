@@ -1,5 +1,5 @@
 <div
-  class="w-full h-full flex flex-col items-center justify-center mt-6 md:h-full lg:py-0"
+  class="w-full h-screen flex flex-col items-center justify-center mt-6 md:h-full px-4 lg:py-0"
 >
   <a
     href="#"
@@ -17,7 +17,7 @@
   >
     Sign in to your account
   </h1>
-  <div class="w-full rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+  <div class="w-full md:mt-0 sm:max-w-md xl:p-0">
     <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
       <form [formGroup]="loginForm" (ngSubmit)="loginUser()" class="space-y-4 md:space-y-6">
         <div>
@@ -78,6 +78,7 @@
           >
         </div>
         <button
+          p-ripple
           type="submit"
           class="w-full p-2.5 rounded-lg text-xs bg-purple-700 text-white border-purple-700"
         >

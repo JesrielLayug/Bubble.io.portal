@@ -5,11 +5,19 @@ import { Response } from '../../models/response';
 import { FormsModule, FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { InfoToastComponent } from '../toasts/info-toast/info-toast.component';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, HttpClientModule, ReactiveFormsModule, CommonModule],
+  imports: [
+    FormsModule, 
+    HttpClientModule, 
+    ReactiveFormsModule, 
+    CommonModule,
+    InfoToastComponent
+  ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -17,7 +25,9 @@ export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   newUser: User = new User();
 
-  constructor(private authService: AuthService, private formBuilder: FormBuilder){}
+  isVisible: boolean = false;
+
+  constructor(private authService: AuthService, private formBuilder: FormBuilder, private ToastService: ToastService){}
   
   ngOnInit(): void {
       this.registerForm = this.formBuilder.group({
@@ -41,14 +51,22 @@ export class RegisterComponent implements OnInit {
       this.authService.register(this.newUser).subscribe({
         next: (response: Response) => {
           if(response.isSuccess){
+            this.ToastService.showInfoToast(response.message);
             console.log(response.message);
+            this.isVisible = false;
+            this.reloadPage();
           }
           else{
+            this.ToastService.showErrorToast(response.message);
             console.log(response.message);
           }
         }
       })
     }
+  }
+
+  reloadPage(): void {
+    window.location.reload();
   }
 
 }
