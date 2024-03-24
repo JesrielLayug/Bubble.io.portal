@@ -18,20 +18,24 @@ import { ToastService } from '../../services/toast.service';
 export class ProfileComponent implements OnInit{
 
   profile: Observable<Profile> | null = null;
+  imageSrc: string | null = null;
 
   constructor(private ProfileService: ProfileService, private router: Router, private ToastService: ToastService){}
 
   async ngOnInit(): Promise<void> {
-      this.profile = await this.ProfileService.get();
+      this.profile = (await this.ProfileService.get());
+
+      this.profile.subscribe(profileData => {
+        const imageType = profileData.imageData?.toLowerCase();
+
+        this.imageSrc = `data:image/png;base64,${profileData.imageData}`;
+
+      })
+
   }
 
   handleEditProfile(): void {
     // Reload the page
-    // window.location.reload();
-
-    setTimeout(() => {
-      // Show toast after the delay
-      this.ToastService.showInfoToast("Successfully updated your profile.");
-    }, 1000);
-}
+    window.location.reload();
+  }
 }

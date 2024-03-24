@@ -19,21 +19,7 @@ export class ProfileService {
         `${environment.apiUrl}/Profile/Get`
       );
 
-      const image$ = await this.HttpClient.get<any>(
-        `${environment.apiUrl}/ProfileImage/Get`
-      );
-
-      return forkJoin({info: info$, image: image$}).pipe(
-        map(({info, image}) => {
-          const profile = new Profile();
-          profile.id = info.id;
-          profile.firstname = info.firstname;
-          profile.lastname = info.lastname;
-          profile.bio = info.bio;
-          profile.email = info.email;
-          return profile;
-        })
-      );
+      return info$;
     }  
     catch(error: any){
       console.error(error);

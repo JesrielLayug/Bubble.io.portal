@@ -4,4 +4,6 @@ export class Profile {
     lastname: string | null = null;
     bio: string | null = null;
     email: string | null = null;
+    imageData: string | null = null;
+    imageUrl: string | null = null;
 }
