@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit{
 
   profile: Observable<Profile> | null = null;
   imageSrc: string | null = null;
+  isModalOpen = false;
 
   constructor(private ProfileService: ProfileService, private router: Router, private ToastService: ToastService){}
 
@@ -26,12 +27,8 @@ export class ProfileComponent implements OnInit{
       this.profile = (await this.ProfileService.get());
 
       this.profile.subscribe(profileData => {
-        const imageType = profileData.imageData?.toLowerCase();
-
         this.imageSrc = `data:image/png;base64,${profileData.imageData}`;
-
       })
-
   }
 
   handleEditProfile(): void {

@@ -26,7 +26,7 @@ import { Router } from '@angular/router';
   styleUrl: './edit-profile.component.css'
 })
 export class EditProfileComponent implements OnInit{
-  @Output() isUpdateSuccess: EventEmitter<any> = new EventEmitter();
+  // @Output() isUpdateSuccess: EventEmitter<any> = new EventEmitter();
 
   profile = new Profile();
   profileForm!: FormGroup;
@@ -56,27 +56,26 @@ export class EditProfileComponent implements OnInit{
           this.imageData = this.imageService.getImageData();
   
           // Extract imageData string from the object
-          const imageDataString = this.imageData?.imageData ?? null;
-          const imageName = this.imageData?.filename ?? null;
+          this.profile.imageData = this.imageData?.imageData ?? null;
+          this.profile.imageUrl = this.imageData?.filename ?? null;
   
-          const profileResponse = await this.profileService.add(this.profile, imageDataString, imageName);
+          const profileResponse = await this.profileService.add(this.profile);
   
           if (profileResponse.isSuccess) {
-              this.isUpdateSuccess.emit(true);
+              this.toastService.showInfoToast(profileResponse.message);
+              this.reloadPage();
           } else {
               this.toastService.showWarnToast(profileResponse.message);
-              this.isUpdateSuccess.emit(false);
+              this.reloadPage();
           }
       } catch (error: any) {
           console.error(error);
           this.toastService.showErrorToast('Failed to update your profile.');
-          this.isUpdateSuccess.emit(false);
+          // this.isUpdateSuccess.emit(false);
       }
   }
 
   reloadPage(): void {
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-      this.router.navigate([this.router.url]);
-    })
+    window.location.reload();
   }
 }

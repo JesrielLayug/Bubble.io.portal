@@ -27,17 +27,30 @@ export class ProfileService {
     };
   }
 
-  async add(profile: Profile, imageData: string | null, imageName: string | null): Promise<Response> {
+  async getAll(): Promise<Observable<Array<Profile>>> {
+    try{
+      const response = await this.HttpClient.get<Array<Profile>>(
+        `${environment.apiUrl}/Profile/GetAll`
+      );
+
+      return response;
+    }
+    catch(error: any){
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async add(profile: Profile): Promise<Response> {
     try {
         const requestData = {
           firstname: profile.firstname,
           lastname: profile.firstname,
           bio: profile.bio,
-          imageData: imageData,
-          imageUrl: imageName
+          imageData: profile.imageData,
+          imageUrl: profile.imageUrl
         };
     
-      
         const httpResponse = await this.HttpClient.post<any>(
             `${environment.apiUrl}/Profile/Add`,
             requestData,
@@ -66,6 +79,32 @@ export class ProfileService {
         throw error;
       }
     }
-}
+  }
+
+  async update(profile: Profile): Promise<Response>{
+    try{
+      const httpResponse = await this.HttpClient.put<Profile>(
+        `${environment.apiUrl}/Profile/Update`,
+        profile,
+        {observe: 'response'}
+      ).toPromise();
+  
+      if(httpResponse !== null && httpResponse !== undefined){
+        const response: Response = {
+          isSuccess: httpResponse.ok,
+          message: httpResponse.ok ? 'Successfully updated your profile.' : 'Failed to update your profile.'
+        };
+  
+        return response;
+      }
+      else{
+        throw new Error('HTTP response is undefined');
+      }
+    }
+    catch(error: any){
+      console.error('Error occured:', error);
+      throw error;
+    }
+  }
 
 }
