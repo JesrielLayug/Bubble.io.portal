@@ -30,9 +30,4 @@ export class ProfileComponent implements OnInit{
         this.imageSrc = `data:image/png;base64,${profileData.imageData}`;
       })
   }
-
-  handleEditProfile(): void {
-    // Reload the page
-    window.location.reload();
-  }
 }

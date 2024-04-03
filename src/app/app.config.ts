@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { CustomHttpInterceptor } from './helper/http.interceptor';
+import { AuthGuard } from './helper/auth.guard';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes), 
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
+    AuthGuard,
     HttpClientModule, 
     FormsModule, 
     ReactiveFormsModule, 
