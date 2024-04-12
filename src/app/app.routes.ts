@@ -20,5 +20,5 @@ export const routes: Routes = [
       { path: '', component: UsersComponent },
     ],
   },
-  { path: 'chat-hub', title: 'ChatHub', component: ChatHubComponent },
+  { path: 'chat/:id', title: 'ChatHub', component: ChatHubComponent },
 ];

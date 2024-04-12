@@ -1,8 +1,8 @@
-export class Chat {
-  senderId: string = '';
-  senderName: string = '';
-  receiverId: string = '';
-  receiverName: string = '';
-  content: string = '';
-  timeStamp: string = '';
+import { ChatContent } from './chatContent';
+import { Profile } from './profile';
+
+export interface Chat {
+  sender: Profile;
+  receiver: Profile;
+  chats: ChatContent[];
 }

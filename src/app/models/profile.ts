@@ -1,9 +1,9 @@
-export class Profile {
-    id: string | null = null;
-    firstname: string | null = null;
-    lastname: string | null = null;
-    bio: string | null = null;
-    email: string | null = null;
-    imageData: string | null = null;
-    imageUrl: string | null = null;
+export interface Profile {
+  id: string;
+  firstname: string;
+  lastname: string;
+  bio: string;
+  email: string;
+  imageData: string;
+  imageUrl: string;
 }

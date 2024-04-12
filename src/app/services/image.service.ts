@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ImageService {
-  imageData: { imageData: string | null, filename: string | null } | null = null;
+  imageData: { imageData: string; filename: string } = {
+    imageData: '',
+    filename: '',
+  };
 
-  setImageData(data: { imageData: string | null, filename: string | null }) {
+  setImageData(data: { imageData: string; filename: string }) {
     this.imageData = data;
   }
 
-  getImageData(): { imageData: string | null, filename: string | null } | null {
+  getImageData(): { imageData: string; filename: string } {
     return this.imageData;
   }
 }
